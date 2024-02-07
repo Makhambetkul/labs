@@ -1,0 +1,1 @@
+print(list(filter(lambda x: sum([x%i == 0 for i in range(1,x+1)]) == 2, list(map(int,input().split())))))
