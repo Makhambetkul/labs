@@ -1,0 +1,5 @@
+h=float(input())
+a=float(input())
+b=float(input())
+S=0.5*h*(a+b)
+print(S)
