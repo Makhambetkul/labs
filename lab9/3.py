@@ -16,6 +16,9 @@ pygame.display.set_caption("Paint")
 painting = []
 
 # Function to draw a square
+def draw_ellipse(pos, size, color):
+    pygame.draw.ellipse(screen, color, [])
+
 def draw_square(pos, size, color):
     pygame.draw.rect(screen, color, [pos[0] - size, pos[1] - size, size * 2, size * 2], 2)
 
@@ -60,7 +63,7 @@ def draw_menu(color):
     black = pygame.draw.rect(screen, (0, 0, 0), [WIDTH - 110, 10, 25, 25])
     plus_button = pygame.draw.rect(screen, 'black', [10, 90, 20, 20])  # Plus button
     minus_button = pygame.draw.rect(screen, 'black', [40, 90, 20, 20])  # Minus button
-
+    ellipse_button = pygame.draw.rect(screen, 'black', [40, 90, 20, 20])
     square_button = pygame.draw.rect(screen, 'black', [70, 90, 20, 20])  # Square button
     right_triangle_button = pygame.draw.rect(screen, 'black', [100, 90, 20, 20])  # Right triangle button
     equilateral_triangle_button = pygame.draw.rect(screen, 'black', [130, 90, 20, 20])  # Equilateral triangle button
@@ -70,7 +73,7 @@ def draw_menu(color):
     rgb_list = [(0, 0, 255), (255, 0, 0), (0, 255, 0), (255, 255, 0),
                 (0, 255, 255), (255, 0, 255), (0, 0, 0), (255, 255, 255)]
 
-    return brush_list, color_rect, rgb_list, plus_button, minus_button, square_button, right_triangle_button, equilateral_triangle_button, rhombus_button
+    return brush_list, color_rect, rgb_list, plus_button, minus_button, square_button, right_triangle_button, equilateral_triangle_button, rhombus_button, ellipse_button
 
 
 def draw_painting(paints):
@@ -89,6 +92,8 @@ def draw_painting(paints):
             draw_equilateral_triangle(pos, size, color)
         elif figure == 5:  # Rhombus
             draw_rhombus(pos, size, color)
+        elif figure == 6:
+            draw_ellipse(pos, size, color)
 
 
 run = True
@@ -98,7 +103,7 @@ while run:
     mouse = pygame.mouse.get_pos()
     left_click = pygame.mouse.get_pressed()[0]
 
-    brushes, colors, rgbs, plus_button, minus_button, square_button, right_triangle_button, equilateral_triangle_button, rhombus_button = draw_menu(active_color)
+    brushes, colors, rgbs, plus_button, minus_button, square_button, right_triangle_button, equilateral_triangle_button, rhombus_button, ellipse_button = draw_menu(active_color)
 
     if left_click and mouse[1] > 85:
         painting.append((active_color, mouse, active_figure, figure_size))
@@ -119,6 +124,8 @@ while run:
             draw_equilateral_triangle(mouse, figure_size, active_color)
         elif active_figure == 5:  # Rhombus
             draw_rhombus(mouse, figure_size, active_color)
+        elif active_figure == 6:
+            draw_ellipse(mouse, figure_size, active_color)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -145,6 +152,9 @@ while run:
                 active_figure = 4
             elif rhombus_button.collidepoint(event.pos):  # Rhombus button clicked
                 active_figure = 5
+            elif ellipse_button.collidepoint(event.pos):
+                active_figure = 6
+            
 
     pygame.display.flip()
 
